@@ -1,0 +1,31 @@
+@charset "ISO-8859-1";
+
+body {
+	background-color: #FBFBFB;
+	min-height: 100vh;
+	position: relative;
+}
+
+/*Edit btn*/
+.btn-primary, .btn-primary:hover, .btn-primary:active:focus {
+	background-color: #6e94cc !important;
+	border: #6e94cc !important;
+}
+
+/*Add btn*/
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active:focus {
+	background-color: #34cd59 !important;
+	border: #34cd59 !important;
+}
+
+/*Delete btn*/
+.btn-warning, .btn-warning:hover, .btn-warning:active:focus {
+	background-color: #ff696b !important;
+	border: #ff696b !important;
+}
+
+button:disabled, button[disabled], button:disabled:hover{
+  border: 1px solid #999999 !important;
+  background-color: #cccccc !important;
+  color: #666666 !important;
+}
