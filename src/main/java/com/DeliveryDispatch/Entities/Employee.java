@@ -35,6 +35,16 @@ public class Employee {
 		this.role = role;
 		this.active = true;
 	}
+	
+	public Employee(String firstName, String lastName, EmployeeRole role) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = "";
+		this.password = "";
+		this.role = role;
+		this.active = true;
+	}
 
 	public int getId() {
 		return id;
