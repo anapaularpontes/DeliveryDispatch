@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+	
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+		<h1>Employees</h1>
+		<table class="table">
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Role</th>
+				<th>Action</th>
+			<tr>
+			<tr th:each="employee : ${employees}">
+				<td th:text="${employee.getFirstName()}"></td>
+				<td th:text="${employee.getLastName()}"></td>
+				<td th:text="${employee.getRole().getName()}"></td> 
+				<td style="white-space: nowrap;">
+					<button th:data-employee="${employee.getId()}" type="button" class="btn-sm btn-primary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="PUT">Edit</button>
+					<form action="/employees" th:method="DELETE" style="display: inline;">
+						<input type="submit" class="btn-sm btn-warning" value="Delete">
+						<input type="hidden" th:value="${employee.getId()}" id="deleteId" name="id">						
+					</form>
+				</td>
+			</tr>
+		</table>
+		<p class="text-right"><button data-employee="0" type="button" class="btn-sm btn-secondary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="POST">Add employee</button></p>
+						 
+		<!-- START MODAL -->
+		<div class="modal" tabindex="-1" role="dialog" id="modalForm">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="modalTitle"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form action="#" th:action="@{/employees}" th:object="${employee}" method="POST" id="employeeForm">
+				  <div class="form-group">
+				  	<input type="hidden" th:field="*{Id}" id="txtId">
+				    <label for="txtFirstName">First Name</label>
+				    <input type="text" class="form-control" id="txtFirstName" th:field="*{firstName}">
+				    <label for="txtLastName">Last Name</label>
+				    <input type="text" class="form-control" id="txtLastName" th:field="*{lastName}">
+				    <label for="txtRole">Role Name</label>
+				    <select id="txtRole" class="form-control" th:field="*{role}">
+						<option th:each="r : ${roles}"  th:value="${r.id}" th:text="${r.getName()}"></option>
+		    		</select>
+				  </div>
+				  	<button type="submit" class="btn btn-primary">Save changes</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- END MODAL -->
+		<script src="/script/employee.js"></script>
+						 
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>

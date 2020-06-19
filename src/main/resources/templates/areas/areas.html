@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+		<h1>Areas</h1>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th>Action</th>
+			<tr>
+			<tr th:each="area : ${areas}">
+				<td th:text="${area.getName()}"></td> 
+				<td style="white-space: nowrap;">
+					<button th:data-area="${area.getId()}" type="button" class="btn-sm btn-primary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="PUT">Edit</button>
+					<form action="/areas" th:method="DELETE" style="display: inline;">
+						<input type="submit" class="btn-sm btn-warning" value="Delete">
+						<input type="hidden" th:value="${area.getId()}" id="deleteId" name="id">						
+					</form>
+				</td>
+			</tr>
+		</table>
+		<p class="text-right"><button data-area="0" type="button" class="btn-sm btn-secondary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="POST">Add area</button></p>
+						 
+		<!-- START MODAL -->
+		<div class="modal" tabindex="-1" role="dialog" id="modalForm">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="modalTitle"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form action="#" th:action="@{/areas}" th:object="${area}" method="POST" id="areaForm">
+				  <div class="form-group">
+				  	<input type="hidden" th:field="*{Id}" id="txtId">
+				    <label for="txtArea">Area</label>
+				    <input type="text" class="form-control" id="txtArea" th:field="*{name}">
+				  </div>
+				  	<button type="submit" class="btn btn-primary">Save changes</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- END MODAL -->
+		<script src="/script/area.js"></script>
+						 
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>
