@@ -61,7 +61,7 @@ public class PopulateDatabase {
 		/**************** Employees ***************/		
 		ArrayList<Employee> employeesList = new ArrayList<>();
 		
-		employeesList.add(new Employee("firstName", "lastName", "admin", "pass1234", roleDAO.findById(1).get()));
+		employeesList.add(new Employee("Lily", "Charles", "admin", "pass1234", roleDAO.findById(1).get()));
 		employeesList.add(new Employee("Leticia", "Hollington", "dispatcher", "pass1234", roleDAO.findById(2).get()));
 		employeesList.add(new Employee("Aron", "Sybbe", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Denis", "Kirmond", "", "", roleDAO.findById(3).get()));
