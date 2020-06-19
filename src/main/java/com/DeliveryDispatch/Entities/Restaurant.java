@@ -1,5 +1,6 @@
 package com.DeliveryDispatch.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Restaurant {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="restaurant_id")
 	private int id = 0;
 	private String name = "";
 	private String address = "";
