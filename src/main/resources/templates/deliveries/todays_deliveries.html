@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+	<div class="col-lg-12">
+		<h1>Deliveries</h1>
+		<div class="d-flex justify-content-end">
+			<div class="p-2">
+				<h5>Sort by:</h5>
+			</div>
+			<div class="p-2"><h6>&nbsp;</h6></div>
+			<div class="p-2">
+				<a href="/deliveries/today">Today's deliveries</a>
+			</div>
+		</div>
+		<p class="text-right"><a class="btn-sm btn-secondary" href="/deliveries/add" role="button">Add delivery</a></p>
+		<table class="table">
+			<tr>
+				<th>Delivery Date</th>
+				<th>Restaurant</th>
+				<th>Address</th>
+				<th>Area</th>
+				<th>Timing</th>
+				<th>Instructions</th>
+				<th>Action</th>
+			<tr>
+			<tr th:each="delivery : ${todaysDeliveries}">
+				<td th:text="${#dates.format(delivery.getDeliveryDate(),'yyyy-MM-dd')}"></td>
+				<td th:text="${delivery.getRestaurant().getName()}"></td>
+				<td th:text="${delivery.getRestaurant().getAddress()}"></td>
+				<td th:text="${delivery.getRestaurant().getArea().getName()}"></td>
+				<td th:text="${delivery.getTiming()}"></td> 
+				<td th:text="${delivery.getInstructions()}"></td>  
+				<td style="white-space: nowrap;">
+					<button th:data-delivery="${delivery.getId()}" type="button" class="btn-sm btn-primary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="PUT">Edit</button>
+					<form action="/deliveries/today" th:method="DELETE" style="display: inline;">
+						<input type="submit" class="btn-sm btn-warning" value="Delete">
+						<input type="hidden" th:value="${delivery.getId()}" id="deleteId" name="id">						
+					</form>
+				</td>
+			</tr>
+		</table>
+						 
+		<!-- START MODAL -->
+		<div class="modal" tabindex="-1" role="dialog" id="modalForm">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="modalTitle"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form action="#" th:action="@{/deliveries/today}" th:object="${delivery}" method="POST" id="deliveryForm">
+				  <div class="form-group">
+				  	<input type="hidden" th:field="*{id}" id="txtId">
+				    <label for="txtRest">Restaurant</label>
+				    <select id="txtRest" class="form-control" th:field="*{restaurant}" required>
+						<option th:each="r : ${restaurants}" th:value="${r.id}" th:text="${r.getName()}"></option>
+					</select>
+					
+					<label for="txtDate">Delivery date</label><br>
+						<input id="txtDate" type="date" th:field="*{deliveryDate}" required> <br>
+						
+						<label for="txtTiming">Timing</label>
+						<select id="txtTiming" class="form-control" th:field="*{timing}" required>
+							<option th:each="t : ${timings}" th:value="${t}" th:text="${t}"></option>
+						</select>
+						
+						<label for="txtInstructions">Instructions</label>
+						<textarea id="txtInstructions" th:field="*{instructions}" maxlength="255" required></textarea>
+					
+				  </div>
+				  	<button type="submit" class="btn btn-primary">Save changes</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
+		<!-- END MODAL -->
+		</div>
+		<script src="/script/delivery.js"></script>
+						 
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>

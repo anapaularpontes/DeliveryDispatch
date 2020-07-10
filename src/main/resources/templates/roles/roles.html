@@ -5,7 +5,10 @@
 </head>
 <body>
 	<header th:replace="index/header.html"></header>
+	<div class="col-lg-12">
 		<h1>Roles</h1>
+		<p class="text-right"><button data-role="0" type="button" class="btn-sm btn-secondary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="POST">Add role</button></p>
 		<table class="table">
 			<tr>
 				<th>Name</th>
@@ -23,8 +26,6 @@
 				</td>
 			</tr>
 		</table>
-		<p class="text-right"><button data-role="0" type="button" class="btn-sm btn-secondary"
-						 data-toggle="modal" data-target="#modalForm" th:data-method="POST">Add role</button></p>
 						 
 		<!-- START MODAL -->
 		<div class="modal" tabindex="-1" role="dialog" id="modalForm">
@@ -51,6 +52,7 @@
 		  </div>
 		</div>
 		<!-- END MODAL -->
+		</div>
 		<script src="/script/role.js"></script>
 						 
 	<footer th:insert="index/footer.html"></footer>

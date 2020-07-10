@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+		<div class = "d-flex justify-content-center">
+		<div class="col-lg-8">
+		<h1>Add delivery</h1>
+			<form action="#" th:action="@{/deliveries/add}" method="POST" th:object="${delivery}">
+				<div class="col-lg-12">
+					<div class="contact-form-style mb-20">
+						<label for="txtRest">Restaurant</label>
+				    <select id="txtRest" class="form-control" th:field="*{restaurant}" value="" required>
+				    	<option value =""></option>
+						<option th:each="r : ${restaurants}" th:value="${r.id}" th:text="${r.getName()}"></option>
+					</select>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div class="contact-form-style mb-20">
+						<label for="txtDate">Delivery date</label><br>
+						<input id="txtDate" type="date" th:field="*{deliveryDate}" required> <br>
+					</div>
+				</div>
+				
+				
+				<div class="col-lg-12">
+					<div class="contact-form-style mb-20">
+						<label for="txtTiming">Timing</label>
+						<select id="txtTiming" class="form-control" th:field="*{timing}" value="" required>
+							<option value =""></option>
+							<option th:each="t : ${timings}" th:value="${t}" th:text="${t}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="col-lg-12">
+					<div class="contact-form-style">
+						<label for="txtInstructions">Instructions</label>
+						<textarea id="txtInstructions" th:field="*{instructions}" maxlength="255" required></textarea>
+						<button class="button" type="submit" data-method="POST">SAVE DELIVERY</button>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>
