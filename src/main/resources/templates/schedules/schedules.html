@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+	
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+	<div class="col-lg-12">
+		<h1>Driver's Schedule</h1>
+		
+		<div style="line-height:2;">&nbsp;</div>
+
+		<div class="row">
+			<div class="col" th:each="day : ${weekDays}">
+				<h3 th:text="${#dates.dayOfWeekName(day)}+' ('+${#dates.format(day,'MM-dd')}+')'" style="font-size:20px;"></h3>
+				<table class="table">
+					<tr th:each="schedule : ${schedules}">
+						<td th:if="${#dates.format(schedule.getDate(), 'yyyy-MM-dd') == #dates.format(day, 'yyyy-MM-dd')}"
+						th:text="${#dates.format(schedule.getStartingTime(),'hh:mm a')}+' - '+${schedule.getEmployee().getFirstName()}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div style="line-height:2;">&nbsp;</div>
+		
+		<p class="text-right"><button data-schedule="0" type="button" class="btn-sm btn-secondary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="POST">Add schedule</button></p>
+		<table class="table">
+			<tr>
+				<th>Employee</th>
+				<th>Date</th>
+				<th>Start Time</th>
+				<th>Action</th>
+			<tr>
+			<tr th:each="schedule : ${schedules}">
+				<td th:text="${schedule.getEmployee().getFirstName()}"></td>
+				<td th:text="${#dates.format(schedule.getDate(),'yyyy-MM-dd')}"></td> 
+				<td th:text="${#dates.format(schedule.getStartingTime(),'hh:mm a')}"></td>
+				 
+				<td style="white-space: nowrap;">
+					<button th:data-schedule="${schedule.getId()}" type="button" class="btn-sm btn-primary"
+						 data-toggle="modal" data-target="#modalForm" th:data-method="PUT">Edit</button>
+					<form action="/schedules" th:method="DELETE" style="display: inline;">
+						<input type="submit" class="btn-sm btn-warning" value="Delete">
+						<input type="hidden" th:value="${schedule.getId()}" id="deleteId" name="id">						
+					</form>
+				</td>
+			</tr>
+		</table>
+		
+						 
+		<!-- START MODAL -->
+		<div class="modal" tabindex="-1" role="dialog" id="modalForm">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="modalTitle"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<form action="#" th:action="@{/schedules}" th:object="${schedule}" method="POST" id="scheduleForm">
+				  <div class="form-group">
+				  	<input type="hidden" th:field="*{Id}" id="txtId">
+				    <label for="txtEmployee">Driver</label>
+				    <select id="txtEmployee" class="form-control" th:field="*{employee}">
+						<option th:each="e : ${employees}"  th:value="${e.id}" th:text="${e.getFirstName()}" required></option>
+		    		</select>
+		    		<label for="txtDate">Date</label><br>
+					<input id="txtDate" type="date" th:field="*{date}" required> <br>
+					<label for="txtTime">Start time</label><br>
+					<input id="txtTime" type="time" th:field="*{startingTime}" required> <br>
+				  </div>
+				  	<button type="submit" class="btn btn-primary">Save changes</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</form>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- END MODAL -->
+		</div>	
+		<script src="/script/schedule.js"></script>	 
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>
