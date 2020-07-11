@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.DeliveryDispatch.Boundaries.DeliveryDAO;
+import com.DeliveryDispatch.Boundaries.EmployeeScheduleDAO;
 import com.DeliveryDispatch.Boundaries.RestaurantDAO;
 import com.DeliveryDispatch.Entities.Delivery;
+import com.DeliveryDispatch.Entities.EmployeeSchedule;
 import com.DeliveryDispatch.Entities.Restaurant;
 
 @Controller
@@ -28,6 +30,8 @@ public class DeliveryController {
 	@Autowired
 	RestaurantDAO restaurantDAO;
 	
+	@Autowired
+	EmployeeScheduleDAO scheduleDAO;
 	
 	@GetMapping("/deliveries")
 	public String ShowAll(Model model) {
@@ -39,6 +43,7 @@ public class DeliveryController {
 	public Iterable<Delivery> getAll() {
 		return deliveryDAO.getAllDeliveries();
 	}
+	
 	
 	@GetMapping("/deliveries/add")
 	public String addPage(Model model) {
@@ -63,16 +68,33 @@ public class DeliveryController {
 		deliveryDAO.save(delivery_db);
 		return "redirect:/deliveries";
 	}
+	
+	@PutMapping("/deliveries/today")
+	public String updateTodaysDelivery(@ModelAttribute Delivery delivery) {
+		Delivery delivery_db = deliveryDAO.findById(delivery.getId()).get();
+		delivery_db.setRestaurant(delivery.getRestaurant());
+		delivery_db.setDeliveryDate(delivery.getDeliveryDate());
+		delivery_db.setTiming(delivery.getTiming());
+		delivery_db.setInstructions(delivery.getInstructions());
+		deliveryDAO.save(delivery_db);
+		return "redirect:/todays_deliveries";
+	}
 
 	@DeleteMapping("/deliveries")
 	public String deleteDelivery(@ModelAttribute Delivery delivery) {
 		deliveryDAO.delete(delivery);
 		return "redirect:/deliveries";
 	}
+	
+	@DeleteMapping("/deliveries/today")
+	public String deleteTodaysDelivery(@ModelAttribute Delivery delivery) {
+		deliveryDAO.delete(delivery);
+		return "redirect:/todays_deliveries";
+	}
 
 	@GetMapping("/deliveries/{id}")
 	@ResponseBody
-	public Delivery seekPath(@PathVariable String id) {
+	public Delivery seekDelivery(@PathVariable String id) {
 		try {
 			return deliveryDAO.findById(Integer.parseInt(id)).get();
 		} catch(Exception ex) {
@@ -82,10 +104,21 @@ public class DeliveryController {
 	
 	@GetMapping("/deliveries/today")
 	public String todaysDeliveries(Model model) {
-		model.addAttribute("todaysDeliveries", deliveryDAO.getTodaysDeliveries());
 		model.addAttribute("delivery", new Delivery());
 		return "deliveries/todays_deliveries";
 	}
+	
+	@GetMapping("/assigndrivers")
+	public String assignDrivers(Model model) {
+		model.addAttribute("delivery", new Delivery());
+		return "deliveries/deliveries_assigndrivers";
+	}
+	
+	@ModelAttribute("todaysDeliveries")
+	public Iterable<Delivery> getTodaysDeliveries() {
+		return deliveryDAO.getTodaysDeliveries();
+	}
+	
 	
 	@ModelAttribute("restaurants")
 	public Iterable<Restaurant> getAllRestaurants() {
@@ -96,6 +129,11 @@ public class DeliveryController {
 	public Iterable<String> getTimings() {
 		List<String> timings =Arrays.asList("Early", "Midday", "Afternoon");
 		return timings;
+	}
+	
+	@ModelAttribute("todaysSchedules")
+	public Iterable<EmployeeSchedule> getSchedules() {
+		return scheduleDAO.getTodaysSchedules();
 	}
 
 }
