@@ -13,7 +13,13 @@ public interface DeliveryDAO extends CrudRepository<Delivery, Integer> {
 	@Query("SELECT d FROM Delivery d ORDER BY d.deliveryDate DESC")
 	Iterable<Delivery> getAllDeliveries();
 	
-	@Query("SELECT d FROM Delivery d WHERE d.deliveryDate = CURRENT_DATE()")
+	/*@Query("SELECT d FROM Delivery d WHERE d.deliveryDate = CURRENT_DATE() ORDER BY d.timing DESC")
+	Iterable<Delivery> getTodaysDeliveries();*/
+	
+	@Query(value="SELECT * FROM Delivery "
+			+ "JOIN Restaurant ON Restaurant.restaurant_id = Delivery.restaurant_id "
+			+ "WHERE Delivery.deliveryDate = CURRENT_DATE() "
+			+ "ORDER BY Delivery.timing DESC, Restaurant.area_id ASC", nativeQuery = true)
 	Iterable<Delivery> getTodaysDeliveries();
 	
 	/*ORDER BY r.name*/
