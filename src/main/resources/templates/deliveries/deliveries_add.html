@@ -12,7 +12,7 @@
 				<div class="col-lg-12">
 					<div class="contact-form-style mb-20">
 						<label for="txtRest">Restaurant</label>
-				    <select id="txtRest" class="form-control" th:field="*{restaurant}" value="" required>
+				    <select id="txtRest" class="form-control" th:field="*{restaurant}" required>
 				    	<option value =""></option>
 						<option th:each="r : ${restaurants}" th:value="${r.id}" th:text="${r.getName()}"></option>
 					</select>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+	<div class="col-lg-12">
+		<h1>Assign Drivers to Today's Deliveries</h1>
+		<div style="line-height:2;">&nbsp;</div>
+		<p class="text-right"><a class="btn-sm btn-secondary" href="/deliveries/add" role="button">Save</a></p>
+		<div class="row">
+			<div class="col">
+				<h3>Early</h3>
+				<table class="table">
+					<tr>
+						<th>Restaurant</th>
+						<th>Area</th>
+						<th>Driver</th>
+					</tr>
+					<tr th:each="delivery : ${todaysDeliveries}">
+						<td th:if="${delivery.getTiming() == 'Early'}"
+							th:text="${delivery.getRestaurant().getName()}"></td>
+						<td th:if="${delivery.getTiming() == 'Early'}"
+							th:text="${delivery.getRestaurant().getArea().getName()}"></td>
+						<td th:if="${delivery.getTiming() == 'Early'}"
+							style="width: 135px"><select id="txtEmployee"
+							class="form-control">
+								<option value=""></option>
+								<option th:each="s : ${todaysSchedules}" th:value="${s.id}"
+									th:text="${s.getEmployee().getFirstName()}+' - '+${#dates.format(s.getStartingTime(),'hh:mm a')}"
+									required></option>
+						</select></td>
+					</tr>
+				</table>
+			</div>
+			<div class="col">
+				<h3>Midday</h3>
+				<table class="table">
+					<tr>
+						<th>Restaurant</th>
+						<th>Area</th>
+						<th>Driver</th>
+					</tr>
+					<tr th:each="delivery : ${todaysDeliveries}">
+						<td th:if="${delivery.getTiming() == 'Midday'}"
+							th:text="${delivery.getRestaurant().getName()}"></td>
+						<td th:if="${delivery.getTiming() == 'Midday'}"
+							th:text="${delivery.getRestaurant().getArea().getName()}"></td>
+						<td th:if="${delivery.getTiming() == 'Midday'}"
+							style="width: 135px"><select id="txtEmployee"
+							class="form-control">
+								<option value=""></option>
+								<option th:each="s : ${todaysSchedules}" th:value="${s.id}"
+									th:text="${s.getEmployee().getFirstName()}+' - '+${#dates.format(s.getStartingTime(),'hh:mm a')}"
+									required></option>
+						</select></td>
+					</tr>
+				</table>
+			</div>
+			<div class="col">
+				<h3>Afternoon</h3>
+				<table class="table">
+					<tr>
+						<th>Restaurant</th>
+						<th>Area</th>
+						<th>Driver</th>
+					</tr>
+					<tr th:each="delivery : ${todaysDeliveries}">
+						<td th:if="${delivery.getTiming() == 'Afternoon'}"
+							th:text="${delivery.getRestaurant().getName()}"></td>
+						<td th:if="${delivery.getTiming() == 'Afternoon'}"
+							th:text="${delivery.getRestaurant().getArea().getName()}"></td>
+						<td th:if="${delivery.getTiming() == 'Afternoon'}"
+							style="width: 135px"><select id="txtEmployee"
+							class="form-control">
+								<option value=""></option>
+								<option th:each="s : ${todaysSchedules}" th:value="${s.id}"
+									th:text="${s.getEmployee().getFirstName()}+' - '+${#dates.format(s.getStartingTime(),'hh:mm a')}"
+									required></option>
+						</select></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+						 
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>

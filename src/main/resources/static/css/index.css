@@ -4,6 +4,7 @@ body {
 	background-color: #FBFBFB;
 	min-height: 100vh;
 	position: relative;
+	padding: 0px 100px;
 }
 
 /*Edit btn*/
