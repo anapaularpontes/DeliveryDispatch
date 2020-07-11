@@ -1,5 +1,6 @@
 package com.DeliveryDispatch.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Employee {
 
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="employee_id")
 	private int id = 0;
 	private String firstName = "";
 	private String lastName = "";
