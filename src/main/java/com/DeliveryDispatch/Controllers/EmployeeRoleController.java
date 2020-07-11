@@ -56,7 +56,7 @@ public class EmployeeRoleController {
 
 	@GetMapping("/roles/{id}")
 	@ResponseBody
-	public EmployeeRole seekPath(@PathVariable String id) {
+	public EmployeeRole seekRole(@PathVariable String id) {
 		try {
 			return roleDAO.findById(Integer.parseInt(id)).get();
 		} catch(Exception ex) {

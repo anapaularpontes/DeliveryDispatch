@@ -56,7 +56,7 @@ public class CityController {
 
 	@GetMapping("/cities/{id}")
 	@ResponseBody
-	public City seekPath(@PathVariable String id) {
+	public City seekCity(@PathVariable String id) {
 		try {
 			return cityDAO.findById(Integer.parseInt(id)).get();
 		} catch(Exception ex) {

@@ -63,7 +63,7 @@ public class EmployeeController {
 
 	@GetMapping("/employees/{id}")
 	@ResponseBody
-	public Employee seekPath(@PathVariable String id) {
+	public Employee seekEmployee(@PathVariable String id) {
 		try {
 			return employeeDAO.findById(Integer.parseInt(id)).get();
 		} catch(Exception ex) {

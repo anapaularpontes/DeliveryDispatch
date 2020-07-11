@@ -56,7 +56,7 @@ public class AreaController {
 
 	@GetMapping("/areas/{id}")
 	@ResponseBody
-	public Area seekPath(@PathVariable String id) {
+	public Area seekArea(@PathVariable String id) {
 		try {
 			return areaDAO.findById(Integer.parseInt(id)).get();
 		} catch(Exception ex) {
