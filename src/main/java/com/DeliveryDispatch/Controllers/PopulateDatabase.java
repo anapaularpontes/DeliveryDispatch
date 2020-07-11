@@ -1,6 +1,12 @@
 package com.DeliveryDispatch.Controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,11 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.DeliveryDispatch.Boundaries.AreaDAO;
 import com.DeliveryDispatch.Boundaries.CityDAO;
+import com.DeliveryDispatch.Boundaries.DeliveryDAO;
 import com.DeliveryDispatch.Boundaries.EmployeeDAO;
 import com.DeliveryDispatch.Boundaries.EmployeeRoleDAO;
 import com.DeliveryDispatch.Boundaries.RestaurantDAO;
 import com.DeliveryDispatch.Entities.Area;
 import com.DeliveryDispatch.Entities.City;
+import com.DeliveryDispatch.Entities.Delivery;
 import com.DeliveryDispatch.Entities.Employee;
 import com.DeliveryDispatch.Entities.EmployeeRole;
 import com.DeliveryDispatch.Entities.Restaurant;
@@ -342,6 +350,42 @@ public class PopulateDatabase {
 		}
 		
 		return "Database populated";
+	}
+	
+	@Autowired
+	DeliveryDAO deliveryDAO;
+	
+	@GetMapping("/seed2")
+	@ResponseBody
+	public String seed2() {
+		
+		/**************** Deliveries ***************/
+		ArrayList<Delivery> deliveriesList = new ArrayList<>();
+		
+		Date date = new Date(new Date().getTime());
+
+		Date todaysDate = null;
+		try {
+			todaysDate = new SimpleDateFormat("yyyy-MM-dd").parse("2020-07-10");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Random random = new Random();
+		List<String> timings =Arrays.asList("Early", "Midday", "Afternoon");
+	
+		for (int i = 0; i < 50; i++) {
+			deliveriesList.add(new Delivery(restDAO.findById(random.nextInt(169)+1).get(), todaysDate, timings.get(random.nextInt(3)), ""));
+		}
+		
+		for(Delivery delivery : deliveriesList) {
+			deliveryDAO.save(delivery);
+		}
+		
+		
+		return null;
+	
 	}
 
 }
