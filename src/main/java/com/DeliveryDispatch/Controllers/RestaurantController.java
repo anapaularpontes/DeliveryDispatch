@@ -44,7 +44,8 @@ public class RestaurantController {
 	
 	@PostMapping("/restaurants")
 	public String createRestaurant(@ModelAttribute Restaurant restaurant) {
-		restaurantDAO.save(restaurant);
+		Restaurant restaurant_db = new Restaurant(restaurant.getName(), restaurant.getAddress(), restaurant.getCity(), restaurant.getArea());
+		restaurantDAO.save(restaurant_db);
 		return "redirect:/restaurants";
 	}
 	
@@ -52,9 +53,9 @@ public class RestaurantController {
 	public String updateRestaurant(@ModelAttribute Restaurant restaurant) {
 		Restaurant restaurant_db = restaurantDAO.findById(restaurant.getId()).get();
 		restaurant_db.setName(restaurant.getName());
-		restaurant_db.setAddress(restaurant.getAddress());;
+		restaurant_db.setAddress(restaurant.getAddress());
 		restaurant_db.setCity(restaurant.getCity());
-		restaurant_db.setArea(restaurant.getArea());;
+		restaurant_db.setArea(restaurant.getArea());
 		restaurantDAO.save(restaurant_db);
 		return "redirect:/restaurants";
 	}

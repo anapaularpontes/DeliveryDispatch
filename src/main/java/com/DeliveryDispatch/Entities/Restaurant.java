@@ -70,7 +70,7 @@ public class Restaurant {
 
 	public void setAddress(String newAddress) {
 		this.address = newAddress;
-		setLatLong();
+
 	}
 
 	public City getCity() {
@@ -114,7 +114,7 @@ public class Restaurant {
 	}
 
 	private void setLatLong() {
-		
+		System.out.println("Entrou no Lat Long");
 		JsonReader reader = new JsonReader();
 		List<Double> latlng = new ArrayList<>();
 		String location = address + ",+" + city.getName();
@@ -125,5 +125,4 @@ public class Restaurant {
 		this.latitude = latlng.get(0);
 		this.longitude = latlng.get(1);
 	}
-	
 }
