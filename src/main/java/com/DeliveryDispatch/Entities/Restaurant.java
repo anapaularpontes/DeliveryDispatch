@@ -1,11 +1,19 @@
 package com.DeliveryDispatch.Entities;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.json.JSONException;
+
+import com.DeliveryDispatch.Boundaries.JsonReader;
 
 @Entity
 public class Restaurant {
@@ -22,6 +30,8 @@ public class Restaurant {
 	@ManyToOne
 	@JoinColumn(name="area_id")
 	private Area area;
+	private double latitude;
+	private double longitude;
 	private boolean active = true;
 	
 	public Restaurant() {	
@@ -35,6 +45,7 @@ public class Restaurant {
 		this.city = city;
 		this.area = area;
 		this.active = true;
+		setLatLong();
 	}
 
 	public int getId() {
@@ -57,8 +68,9 @@ public class Restaurant {
 		return address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddress(String newAddress) {
+		this.address = newAddress;
+		setLatLong();
 	}
 
 	public City getCity() {
@@ -84,6 +96,34 @@ public class Restaurant {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
 	
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	private void setLatLong() {
+		
+		JsonReader reader = new JsonReader();
+		List<Double> latlng = new ArrayList<>();
+		String location = address + ",+" + city.getName();
+		location = location.replaceAll(" ", "+");
+		try {
+			latlng = reader.getLatLng("http://www.mapquestapi.com/geocoding/v1/address?key=qbDMEBuv5nz6JRAmXBX0PAiOVKyvDalG&location="+ location);
+		} catch (JSONException | IOException e) {	}
+		this.latitude = latlng.get(0);
+		this.longitude = latlng.get(1);
+	}
 	
 }
