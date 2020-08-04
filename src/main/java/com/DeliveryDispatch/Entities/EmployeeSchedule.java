@@ -2,6 +2,7 @@ package com.DeliveryDispatch.Entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class EmployeeSchedule {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="schedule_id")
 	private int id = 0;
 	@ManyToOne
 	@JoinColumn(name="employee_id")
