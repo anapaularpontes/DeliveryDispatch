@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet"
+		href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		crossorigin="" />
+	<!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+		integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+		crossorigin=""></script>
+</head>
+<body>
+	<header th:replace="index/header.html"></header>
+	<div class="col-lg-12">
+		<h1>Deliveries Sequence</h1>
+		<div class="row">
+			<div class="col" th:each="seq : ${sequences}">
+				<h3  th:text="${seq.getEmployee().getFirstName()}"></h3>
+				<table class="table">
+					<div th:each="delivery : ${seq.getDeliveries()}">
+						<li class="media">
+							<div class="serial-number"
+								th:text="${seq.getDeliveries().indexOf(delivery)+1}+' - '">
+							</div>
+							<div class="media-body">
+								<p class="mt-0 mb-1"
+									th:text="${delivery.getRestaurant().getName()}"></p>
+							</div>
+						</li>
+					</div>
+				</table>
+				<div id="mapid" style="width: 500px; height: 400px; position: relative; outline: none;"></div>
+				<script src="/script/map.js"></script>
+			</div>
+		</div>
+		<div style="line-height:2;">&nbsp;</div>
+		
+		
+						 
+	<footer th:insert="index/footer.html"></footer>
+</body>
+</html>
