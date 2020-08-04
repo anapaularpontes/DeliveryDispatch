@@ -2,6 +2,7 @@ package com.DeliveryDispatch.Entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ public class Delivery {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="delivery_id", unique = true, nullable = false)
 	private int id = 0;
 	@ManyToOne
 	@JoinColumn(name="restaurant_id")
@@ -23,6 +25,9 @@ public class Delivery {
 	private Date deliveryDate;
 	private String timing = ""; //EARLY	MIDDAY	AFTERNOON
 	private String instructions = "";
+	@ManyToOne
+	@JoinColumn(name="schedule_id")
+	private EmployeeSchedule driverSchedule;
 	
 	public Delivery() {
 		super();
@@ -34,6 +39,15 @@ public class Delivery {
 		this.deliveryDate = deliveryDate;
 		this.timing = timing;
 		this.instructions = instructions;
+	}
+	
+	public Delivery(Restaurant restaurant, Date deliveryDate, String timing, String instructions, EmployeeSchedule driverSchedule) {
+		super();
+		this.restaurant = restaurant;
+		this.deliveryDate = deliveryDate;
+		this.timing = timing;
+		this.instructions = instructions;
+		this.driverSchedule = driverSchedule;
 	}
 	
 	public int getId() {
@@ -75,5 +89,15 @@ public class Delivery {
 	public void setInstructions(String instructions) {
 		this.instructions = instructions;
 	}
+
+	public EmployeeSchedule getDriverSchedule() {
+		return driverSchedule;
+	}
+
+	public void setDriverSchedule(EmployeeSchedule driverSchedule) {
+		this.driverSchedule = driverSchedule;
+	}
+	
+	
 
 }
