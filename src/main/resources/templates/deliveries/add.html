@@ -29,7 +29,7 @@
 				<div class="col-lg-12">
 					<div class="contact-form-style mb-20">
 						<label for="txtTiming">Timing</label>
-						<select id="txtTiming" class="form-control" th:field="*{timing}" value="" required>
+						<select id="txtTiming" class="form-control" th:field="*{timing}" required>
 							<option value =""></option>
 							<option th:each="t : ${timings}" th:value="${t}" th:text="${t}"></option>
 						</select>

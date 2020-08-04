@@ -1,84 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
 </head>
 <body>
 	<header th:replace="index/header.html"></header>
 	<div class="col-lg-12">
 		<h1>Assign Drivers to Today's Deliveries</h1>
-		<div style="line-height:2;">&nbsp;</div>
-		<p class="text-right"><a class="btn-sm btn-secondary" href="/deliveries/add" role="button">Save</a></p>
+		<div style="line-height:1;">&nbsp;</div>
+		<p class="text-right"><a class="btn-sm btn-secondary" href="/deliveries/createsequence" role="button">Create sequence</a></p>
 		<div class="row">
-			<div class="col">
-				<h3>Early</h3>
+			<div class="col" th:each="t : ${timings}">
+				<h3 th:text="${t}"></h3>
 				<table class="table">
 					<tr>
 						<th>Restaurant</th>
 						<th>Area</th>
 						<th>Driver</th>
 					</tr>
-					<tr th:each="delivery : ${todaysDeliveries}">
-						<td th:if="${delivery.getTiming() == 'Early'}"
-							th:text="${delivery.getRestaurant().getName()}"></td>
-						<td th:if="${delivery.getTiming() == 'Early'}"
-							th:text="${delivery.getRestaurant().getArea().getName()}"></td>
-						<td th:if="${delivery.getTiming() == 'Early'}"
-							style="width: 135px"><select id="txtEmployee"
-							class="form-control">
+					<tr th:each="d : ${todaysDeliveries}">
+						<td th:if="${d.getTiming()} == ${t}"
+							th:text="${d.getRestaurant().getName()}"></td>
+						<td th:if="${d.getTiming()} == ${t}"
+							th:text="${d.getRestaurant().getArea().getName()}"></td>
+						<td th:if="${d.getTiming()} == ${t}" style="width: 135px">
+							<form action="#" th:action="@{/assigndrivers}" method="POST" th:object="${delivery}" required>
+							<input type="hidden" id="txtId" th:name="Id" th:value="${d.id}">
+							<select id="txtEmployee" th:name="Employee" class="form-control" onchange="this.form.submit()">
 								<option value=""></option>
 								<option th:each="s : ${todaysSchedules}" th:value="${s.id}"
 									th:text="${s.getEmployee().getFirstName()}+' - '+${#dates.format(s.getStartingTime(),'hh:mm a')}"
-									required></option>
-						</select></td>
-					</tr>
-				</table>
-			</div>
-			<div class="col">
-				<h3>Midday</h3>
-				<table class="table">
-					<tr>
-						<th>Restaurant</th>
-						<th>Area</th>
-						<th>Driver</th>
-					</tr>
-					<tr th:each="delivery : ${todaysDeliveries}">
-						<td th:if="${delivery.getTiming() == 'Midday'}"
-							th:text="${delivery.getRestaurant().getName()}"></td>
-						<td th:if="${delivery.getTiming() == 'Midday'}"
-							th:text="${delivery.getRestaurant().getArea().getName()}"></td>
-						<td th:if="${delivery.getTiming() == 'Midday'}"
-							style="width: 135px"><select id="txtEmployee"
-							class="form-control">
-								<option value=""></option>
-								<option th:each="s : ${todaysSchedules}" th:value="${s.id}"
-									th:text="${s.getEmployee().getFirstName()}+' - '+${#dates.format(s.getStartingTime(),'hh:mm a')}"
-									required></option>
-						</select></td>
-					</tr>
-				</table>
-			</div>
-			<div class="col">
-				<h3>Afternoon</h3>
-				<table class="table">
-					<tr>
-						<th>Restaurant</th>
-						<th>Area</th>
-						<th>Driver</th>
-					</tr>
-					<tr th:each="delivery : ${todaysDeliveries}">
-						<td th:if="${delivery.getTiming() == 'Afternoon'}"
-							th:text="${delivery.getRestaurant().getName()}"></td>
-						<td th:if="${delivery.getTiming() == 'Afternoon'}"
-							th:text="${delivery.getRestaurant().getArea().getName()}"></td>
-						<td th:if="${delivery.getTiming() == 'Afternoon'}"
-							style="width: 135px"><select id="txtEmployee"
-							class="form-control">
-								<option value=""></option>
-								<option th:each="s : ${todaysSchedules}" th:value="${s.id}"
-									th:text="${s.getEmployee().getFirstName()}+' - '+${#dates.format(s.getStartingTime(),'hh:mm a')}"
-									required></option>
-						</select></td>
+									th:selected= "${s} == ${d.getDriverSchedule()}"></option>
+							</select>
+							<input type="hidden" name="_method" value="put" />
+							</form>
+						</td>
 					</tr>
 				</table>
 			</div>
