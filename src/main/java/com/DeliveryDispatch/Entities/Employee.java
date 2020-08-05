@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 @Entity
 public class Employee {
 
@@ -33,7 +35,7 @@ public class Employee {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-		this.password = password;
+		this.password = encodePassword(password);
 		this.role = role;
 		this.active = true;
 	}
@@ -42,10 +44,10 @@ public class Employee {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.username = "";
-		this.password = "";
 		this.role = role;
 		this.active = true;
+		this.username = role.getName().concat(Integer.toString(id));
+		this.password = encodePassword("pass1234");
 	}
 
 	public int getId() {
@@ -80,12 +82,18 @@ public class Employee {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String encodePassword(String strToEncrypt) {
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		return passwordEncryptor.encryptPassword(strToEncrypt);
 	}
-
+	
+	public boolean validatePassword(String typedPassword) {
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		return passwordEncryptor.checkPassword(typedPassword, password);
+	}
+	
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = encodePassword(password);
 	}
 
 	public EmployeeRole getRole() {

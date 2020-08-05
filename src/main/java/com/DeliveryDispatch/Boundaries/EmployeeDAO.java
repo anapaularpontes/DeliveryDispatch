@@ -1,6 +1,8 @@
 package com.DeliveryDispatch.Boundaries;
 
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
@@ -16,5 +18,7 @@ public interface EmployeeDAO extends CrudRepository<Employee, Integer>{
 
 	@Query(value="SELECT * FROM Employee WHERE role_id = 3 AND active = true ORDER BY firstName", nativeQuery = true)
 	Iterable<Employee> findDrivers();
+	
+	Optional<Employee> findByUsername(String username);
 
 }

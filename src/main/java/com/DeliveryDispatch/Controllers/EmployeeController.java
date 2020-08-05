@@ -39,7 +39,7 @@ public class EmployeeController {
 	
 	@PostMapping("/employees")
 	public String createEmployee(@ModelAttribute Employee employee) {
-		employeeDAO.save(employee);
+		employeeDAO.save(new Employee(employee.getFirstName(), employee.getLastName(), employee.getRole()));
 		return "redirect:/employees";
 	}
 	
