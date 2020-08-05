@@ -4,7 +4,7 @@
 	
 </head>
 <body>
-	<header th:replace="index/header.html"></header>
+	<header th:replace="index/header-login.html"></header>
 	<div class="col-lg-12">
 		<h1>Driver's Schedule</h1>
 		
@@ -66,7 +66,7 @@
 				  	<input type="hidden" th:field="*{Id}" id="txtId">
 				    <label for="txtEmployee">Driver</label>
 				    <select id="txtEmployee" class="form-control" th:field="*{employee}">
-						<option th:each="e : ${employees}"  th:value="${e.id}" th:text="${e.getFirstName()}" required></option>
+						<option th:each="e : ${employees}"  th:value="${e.id}" th:text="${e.getFirstName()}"></option>
 		    		</select>
 		    		<label for="txtDate">Date</label><br>
 					<input id="txtDate" type="date" th:field="*{date}" required> <br>

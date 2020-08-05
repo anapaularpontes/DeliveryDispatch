@@ -11,30 +11,23 @@
 		crossorigin=""></script>
 </head>
 <body>
-	<header th:replace="index/header.html"></header>
+	<header th:replace="index/header-login.html"></header>
 	<div class="col-lg-12">
-		<h1>Deliveries Sequence</h1>
-		<div class="row">
-			<div class="col" th:each="seq : ${sequences}">
-				<h3  th:text="${seq.getEmployee().getFirstName()}"></h3>
-				<table class="table">
-					<div th:each="delivery : ${seq.getDeliveries()}">
-						<li class="media">
-							<div class="serial-number"
-								th:text="${seq.getDeliveries().indexOf(delivery)+1}+' - '">
-							</div>
-							<div class="media-body">
-								<p class="mt-0 mb-1"
-									th:text="${delivery.getRestaurant().getName()}"></p>
-							</div>
-						</li>
-					</div>
-				</table>
-				<div id="mapid" style="width: 500px; height: 400px; position: relative; outline: none;"></div>
-				<script src="/script/map.js"></script>
-			</div>
+		<h1>Sequence Details</h1>
+		<div style="line-height:1;">&nbsp;</div>
+		<h3 th:text="'Driver: '+ ${sequence.getEmployee().getFirstName()}"></h3>
+		<h4	th:text="'Date: '+ ${#dates.format(sequence.getDeliveries().get(0).getDeliveryDate(),'yyyy-MM-dd')}"></h4>
+		<div style="line-height:1;">&nbsp;</div>
+		<div th:each="delivery : ${sequence.getDeliveries()}">
+			<h5 th:text="${sequence.getDeliveries().indexOf(delivery)+1}+' - '+${delivery.getRestaurant().getName()}"></h5>
 		</div>
-		<div style="line-height:2;">&nbsp;</div>
+		<div id="mapid" style="width: 750px; height: 500px; position: relative; outline: none;"></div>
+		<script type="text/javascript">
+		var sequence_id = [[${sequence.getId()}]];
+		</script>
+		<script src="/script/map.js"></script>
+	</div>
+	<div style="line-height:2;">&nbsp;</div>
 		
 		
 						 

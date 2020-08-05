@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+	<header th:replace="index/header-login.html"></header>
+	<div class="col-lg-12">
+		<h1>Sequences</h1>
+		<table class="table">
+			<tr>
+				<th>Date</th>
+				<th>Driver</th>
+				<th>Number of Deliveries</th>
+				<th>Details</th>
+			<tr>
+			<tr th:each="seq : ${sequences}">
+				<td th:text="${#dates.format(seq.getDeliveries().get(0).getDeliveryDate(),'yyyy-MM-dd')}"></td>
+				<td th:text="${seq.getEmployee().getFirstName()}"></td> 
+				<td th:text="${seq.getDeliveries().size()}"></td>
+				<td><a class="nav-link" th:href="@{'/deliveries/sequence/'+${seq.getId()}+'/detail'}">Show details</a></td>
+			</tr>
+		</table>
+	</div>
+	<div style="line-height:2;">&nbsp;</div>
+		
+
+</body>
+</html>
