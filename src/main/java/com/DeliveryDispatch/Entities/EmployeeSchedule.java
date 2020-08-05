@@ -68,8 +68,4 @@ public class EmployeeSchedule {
 	public void setStartingTime(Date startingTime) {
 		this.startingTime = startingTime;
 	}
-	
-	
-	
-
 }

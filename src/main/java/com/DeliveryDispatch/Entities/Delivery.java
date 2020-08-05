@@ -16,7 +16,7 @@ public class Delivery {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="delivery_id", unique = true, nullable = false)
+	@Column(name="delivery_id")
 	private int id = 0;
 	@ManyToOne
 	@JoinColumn(name="restaurant_id")
@@ -28,6 +28,7 @@ public class Delivery {
 	@ManyToOne
 	@JoinColumn(name="schedule_id")
 	private EmployeeSchedule driverSchedule;
+	//private boolean sequence = false;
 	
 	public Delivery() {
 		super();
@@ -39,6 +40,7 @@ public class Delivery {
 		this.deliveryDate = deliveryDate;
 		this.timing = timing;
 		this.instructions = instructions;
+		//this.sequence = false;
 	}
 	
 	public Delivery(Restaurant restaurant, Date deliveryDate, String timing, String instructions, EmployeeSchedule driverSchedule) {
@@ -49,7 +51,7 @@ public class Delivery {
 		this.instructions = instructions;
 		this.driverSchedule = driverSchedule;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -97,7 +99,4 @@ public class Delivery {
 	public void setDriverSchedule(EmployeeSchedule driverSchedule) {
 		this.driverSchedule = driverSchedule;
 	}
-	
-	
-
 }

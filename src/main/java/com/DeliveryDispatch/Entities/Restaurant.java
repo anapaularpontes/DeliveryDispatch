@@ -114,13 +114,12 @@ public class Restaurant {
 	}
 
 	private void setLatLong() {
-		System.out.println("Entrou no Lat Long");
 		JsonReader reader = new JsonReader();
 		List<Double> latlng = new ArrayList<>();
 		String location = address + ",+" + city.getName();
 		location = location.replaceAll(" ", "+");
 		try {
-			latlng = reader.getLatLng("http://www.mapquestapi.com/geocoding/v1/address?key=qbDMEBuv5nz6JRAmXBX0PAiOVKyvDalG&location="+ location);
+			latlng = reader.getLatLng("http://www.mapquestapi.com/geocoding/v1/address?key=AJfdGQw929GI18MEVWAcTOw0caziblVy&location="+ location);
 		} catch (JSONException | IOException e) {	}
 		this.latitude = latlng.get(0);
 		this.longitude = latlng.get(1);

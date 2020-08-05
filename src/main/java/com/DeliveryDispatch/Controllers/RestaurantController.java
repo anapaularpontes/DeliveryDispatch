@@ -44,8 +44,7 @@ public class RestaurantController {
 	
 	@PostMapping("/restaurants")
 	public String createRestaurant(@ModelAttribute Restaurant restaurant) {
-		Restaurant restaurant_db = new Restaurant(restaurant.getName(), restaurant.getAddress(), restaurant.getCity(), restaurant.getArea());
-		restaurantDAO.save(restaurant_db);
+		restaurantDAO.save(restaurant);
 		return "redirect:/restaurants";
 	}
 	
