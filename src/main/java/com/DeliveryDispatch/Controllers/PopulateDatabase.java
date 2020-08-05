@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.DeliveryDispatch.Boundaries.AreaDAO;
 import com.DeliveryDispatch.Boundaries.CityDAO;
 import com.DeliveryDispatch.Boundaries.DeliveryDAO;
 import com.DeliveryDispatch.Boundaries.EmployeeDAO;
 import com.DeliveryDispatch.Boundaries.EmployeeRoleDAO;
+import com.DeliveryDispatch.Boundaries.EmployeeScheduleDAO;
 import com.DeliveryDispatch.Boundaries.RestaurantDAO;
 import com.DeliveryDispatch.Entities.Area;
 import com.DeliveryDispatch.Entities.City;
@@ -49,9 +51,14 @@ public class PopulateDatabase {
 	@Autowired
 	EmployeeDAO empDAO;
 	
+	@Autowired
+	DeliveryDAO deliveryDAO;
+	
+	@Autowired
+	EmployeeScheduleDAO scheduleDAO;
+	
 	@GetMapping("/seed")
-	@ResponseBody
-	public String seed() {
+	public String seed(RedirectAttributes redirAttrs) {
 		
 		
 		
@@ -71,16 +78,12 @@ public class PopulateDatabase {
 		
 		employeesList.add(new Employee("Lily", "Charles", "admin", "pass1234", roleDAO.findById(1).get()));
 		employeesList.add(new Employee("Leticia", "Hollington", "dispatcher", "pass1234", roleDAO.findById(2).get()));
-		employeesList.add(new Employee("Aron", "Sybbe", "", "", roleDAO.findById(3).get()));
-		employeesList.add(new Employee("Denis", "Kirmond", "", "", roleDAO.findById(3).get()));
-		employeesList.add(new Employee("Giralda", "Aizlewood", "", "", roleDAO.findById(3).get()));
-		employeesList.add(new Employee("Filmore", "Fulmen", "", "", roleDAO.findById(3).get()));
+		employeesList.add(new Employee("Aaron", "Sybbe", "", "", roleDAO.findById(3).get()));
+		employeesList.add(new Employee("Dennis", "Kirmond", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Burke", "Boulden", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Theobald", "Slegg", "", "", roleDAO.findById(3).get()));
-		employeesList.add(new Employee("Dud", "Ewdale", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Renaud", "Elsmore", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Henry", "O'Mailey", "", "", roleDAO.findById(3).get()));
-		employeesList.add(new Employee("Elsey", "Woffinden", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Issiah", "Lowis", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Josias", "Diter", "", "", roleDAO.findById(3).get()));
 		employeesList.add(new Employee("Raven", "Barwise", "", "", roleDAO.findById(3).get()));
@@ -291,7 +294,6 @@ public class PopulateDatabase {
 		// Tri-Cities
 		restaurantsList.add(new Restaurant("Caffé Divano", "3003 Burlington Dr, Coquitlam, BC V3B 6X1", cityDAO.findById(7).get(), areaDAO.findById(15).get()));
 		restaurantsList.add(new Restaurant("Doppio Zero Pizza", "1655 Como Lake Ave", cityDAO.findById(7).get(), areaDAO.findById(15).get()));
-		restaurantsList.add(new Restaurant("La Ruota Pizzeria", "100-1168 The High St", cityDAO.findById(7).get(), areaDAO.findById(15).get()));
 		restaurantsList.add(new Restaurant("Rio Brazilian Steakhouse (Coquitlam)", "2729 Barnet Hwy", cityDAO.findById(7).get(), areaDAO.findById(15).get()));
 		restaurantsList.add(new Restaurant("Ethno Restaurant Vayat", "1147 Austin Ave", cityDAO.findById(7).get(), areaDAO.findById(15).get()));
 		restaurantsList.add(new Restaurant("The Golden Boot Caffé", "1028 Ridgeway Ave", cityDAO.findById(7).get(), areaDAO.findById(15).get()));
@@ -349,15 +351,14 @@ public class PopulateDatabase {
 			restDAO.save(rest);
 		}
 		
-		return "Database populated";
+		return "redirect:/";
 	}
 	
-	@Autowired
-	DeliveryDAO deliveryDAO;
+	
 	
 	@GetMapping("/seed2")
 	@ResponseBody
-	public String seed2() {
+	public String createDeliveries() {
 		
 		/**************** Deliveries ***************/
 		ArrayList<Delivery> deliveriesList = new ArrayList<>();
@@ -366,7 +367,7 @@ public class PopulateDatabase {
 
 		Date todaysDate = null;
 		try {
-			todaysDate = new SimpleDateFormat("yyyy-MM-dd").parse("2020-07-10");
+			todaysDate = new SimpleDateFormat("yyyy-MM-dd").parse("2020-08-04");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -375,16 +376,20 @@ public class PopulateDatabase {
 		Random random = new Random();
 		List<String> timings =Arrays.asList("Early", "Midday", "Afternoon");
 	
-		for (int i = 0; i < 50; i++) {
-			deliveriesList.add(new Delivery(restDAO.findById(random.nextInt(169)+1).get(), todaysDate, timings.get(random.nextInt(3)), ""));
+		for (int i = 0; i < 20; i++) {
+			
+			int j = random.nextInt(3);
+			
+			deliveriesList.add(new Delivery(restDAO.findById(random.nextInt(169)+1).get(), todaysDate, timings.get(j), "", scheduleDAO.findById(j+4).get()));
 		}
 		
-		for(Delivery delivery : deliveriesList) {
-			deliveryDAO.save(delivery);
+		List<Delivery> deliveriesFiltered = new ArrayList<>();
+	
+		for (Delivery d : deliveriesList) {
+			deliveryDAO.save(d);
 		}
-		
-		
-		return null;
+
+		return "redirect:/deliveries";
 	
 	}
 
