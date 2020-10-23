@@ -6,7 +6,12 @@ import org.springframework.stereotype.Component;
 
 import com.DeliveryDispatch.Entities.Delivery;
 
-
+/**
+ * Extends CrudRepository for Delivery entity
+ * 
+ * @author Ana Paula Pontes
+ *
+ */
 @Component
 public interface DeliveryDAO extends CrudRepository<Delivery, Integer> {
 	
