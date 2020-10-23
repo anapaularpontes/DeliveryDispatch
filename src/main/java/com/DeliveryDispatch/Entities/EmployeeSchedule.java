@@ -11,25 +11,31 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * A class that represents the schedule of an employee
+ * 
+ * @author Ana Paula Pontes
+ *
+ */
 @Entity
 public class EmployeeSchedule {
-	
+
 	@javax.persistence.Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="schedule_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "schedule_id")
 	private int id = 0;
 	@ManyToOne
-	@JoinColumn(name="employee_id")
+	@JoinColumn(name = "employee_id")
 	private Employee employee;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
-	@DateTimeFormat(pattern="HH:mm")
+	@DateTimeFormat(pattern = "HH:mm")
 	private Date startingTime;
-	
+
 	public EmployeeSchedule() {
 		super();
 	}
-	
+
 	public EmployeeSchedule(Employee employee, Date date, Date startingTime) {
 		super();
 		this.employee = employee;

@@ -5,16 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+/**
+ * A class that represents a city.
+ * 
+ * @author Ana Paula Pontes
+ *
+ */
 @Entity
 public class City {
-	
+
 	@javax.persistence.Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="city_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "city_id")
 	private int id = 0;
 	private String name = "";
 	private boolean active = true;
-	
+
 	public City() {
 		super();
 	}
@@ -40,7 +46,7 @@ public class City {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public boolean isActive() {
 		return active;
 	}

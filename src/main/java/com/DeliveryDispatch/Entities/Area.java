@@ -5,16 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+/**
+ * A class that represents the area that restaurants are in.
+ * 
+ * @author Ana Paula Pontes
+ *
+ */
 @Entity
 public class Area {
-	
+
 	@javax.persistence.Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="area_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "area_id")
 	private int id = 0;
 	private String name = "";
 	private boolean active = true;
-	
+
 	public Area() {
 		super();
 	}
@@ -40,7 +46,7 @@ public class Area {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public boolean isActive() {
 		return active;
 	}

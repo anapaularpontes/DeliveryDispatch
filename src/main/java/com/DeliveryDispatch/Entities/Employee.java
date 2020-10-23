@@ -9,28 +9,33 @@ import javax.persistence.ManyToOne;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
+/**
+ * A class that represents an employee
+ * 
+ * @author Ana Paula Pontes
+ *
+ */
 @Entity
 public class Employee {
 
 	@javax.persistence.Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="employee_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "employee_id")
 	private int id = 0;
 	private String firstName = "";
 	private String lastName = "";
 	private String username = "";
 	private String password = "";
 	@ManyToOne
-	@JoinColumn(name="role_id")
+	@JoinColumn(name = "role_id")
 	private EmployeeRole role;
 	private boolean active = true;
-	
+
 	public Employee() {
 		super();
 	}
 
-	public Employee(String firstName, String lastName, String username, String password,
-			EmployeeRole role) {
+	public Employee(String firstName, String lastName, String username, String password, EmployeeRole role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -39,7 +44,7 @@ public class Employee {
 		this.role = role;
 		this.active = true;
 	}
-	
+
 	public Employee(String firstName, String lastName, EmployeeRole role) {
 		super();
 		this.firstName = firstName;
@@ -82,16 +87,6 @@ public class Employee {
 		this.username = username;
 	}
 
-	public String encodePassword(String strToEncrypt) {
-		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-		return passwordEncryptor.encryptPassword(strToEncrypt);
-	}
-	
-	public boolean validatePassword(String typedPassword) {
-		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-		return passwordEncryptor.checkPassword(typedPassword, password);
-	}
-	
 	public void setPassword(String password) {
 		this.password = encodePassword(password);
 	}
@@ -111,6 +106,27 @@ public class Employee {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
+
+	/**
+	 * Encrypts a password
+	 * 
+	 * @param strToEncrypt
+	 * @return encrypted password
+	 */
+	public String encodePassword(String strToEncrypt) {
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		return passwordEncryptor.encryptPassword(strToEncrypt);
+	}
+
+	/**
+	 * Checks if a typed password matches the password in the database
+	 * 
+	 * @param typedPassword
+	 * @return true if the password matches, false if it does not
+	 */
+	public boolean validatePassword(String typedPassword) {
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		return passwordEncryptor.checkPassword(typedPassword, password);
+	}
+
 }
