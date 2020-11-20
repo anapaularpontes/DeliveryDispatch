@@ -14,30 +14,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.DeliveryDispatch.Boundaries.AreaDAO;
 import com.DeliveryDispatch.Entities.Area;
 
+/**
+ * Controls the endpoints for the Areas
+ * 
+ * @author Ana Paula Pontes
+ *
+ */
 @Controller
 public class AreaController {
-	
+
 	@Autowired
 	AreaDAO areaDAO;
-	
-	
+
 	@GetMapping("/areas")
 	public String ShowAll(Model model) {
 		model.addAttribute("area", new Area());
 		return "areas/areas";
 	}
-	
+
 	@ModelAttribute("areas")
 	public Iterable<Area> getAll() {
 		return areaDAO.getAllAreas();
 	}
-	
+
 	@PostMapping("/areas")
 	public String createArea(@ModelAttribute Area area) {
 		areaDAO.save(area);
 		return "redirect:/areas";
 	}
-	
+
 	@PutMapping("/areas")
 	public String updateArea(@ModelAttribute Area area) {
 		Area area_db = areaDAO.findById(area.getId()).get();
@@ -59,10 +64,9 @@ public class AreaController {
 	public Area seekArea(@PathVariable String id) {
 		try {
 			return areaDAO.findById(Integer.parseInt(id)).get();
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			return new Area();
 		}
 	}
-
 
 }
