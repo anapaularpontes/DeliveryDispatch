@@ -1,9 +1,4 @@
 # DeliveryDispatch
-<br><br>
-## Table of contents
-- [Overview](#overview)
-- [Installation](#installation)
-- [How the program works](#how-the-program-works)
 
 ## Overview
 <p>The Delivery Dispatch System is a website application which purpose is to optimize deliveries’ sequence to meet 
@@ -13,27 +8,15 @@ sequence, resulting in non-efficient journey time and delays.</p>
 <p>The main objective of the system is to deliver a platform that will generate the sequence of delivery for the driver.</p>
 
 ### Technologies
-<p>The technologies used to develop the project and keep version control are:</p>
+<p>The technologies used to develop the project are:</p>
 <ul>
-    <li>•	Java</li>
-    <li>•	Spring Boot</li>
-    <li>•	MySQL</li>
-    <li>•	Tomcat</li>
-    <li>•	Hibernate</li>
-    <li>•	Thymeleaf</li>
+    <li>Java</li>
+    <li>Spring Boot</li>
+    <li>MySQL</li>
+    <li>Tomcat</li>
+    <li>Hibernate</li>
+    <li>Thymeleaf</li>
 </ul>
-
-## Installation
-<ol>
-    <li>Clone the DeliveryDispatch repository.</li>
-    <li>Fire up Eclipse and click on “Launch” button.</li>
-    <li>Go to “File” -> "Open Projects from File System..." -> ”Directory…”.</li>
-    <li>Select the folder of the project.</li>
-    <li>While Maven download the dependencies, start MySQL and create a database called "dispatch".</li>
-    <li>Got to the folder “src/main/java” and look for the package “com.Delivery.Dispatch”.</li>
-    <li>Open the “DeliveryDispatchApplication.java” and Run!</li>
-</ol>
-<p>Type “localhost:8080/seed” on your browser: the database will be populated and it will be automatically redirected to the Home Page.</p>
 
 ## How the program works
 
@@ -81,16 +64,16 @@ you can see which restaurants correspond to that marker. In the image, the user 
 ### Restaurants Page and Database Menu
 <p>Bellow, a brief explanation of the Database’s menu:</p>
 <ul>
-    <li>6.	<strong>Restaurants:</strong>
-        The page shows all the restaurants in the database, their information, and provide CRUD operations. The following image represents this page.</li>
-    <li>7.	<strong>Areas:</strong>
-        The page shows all the areas in the database, their information, and provide CRUD operations. The areas are assigned to the restaurants.</li>
-    <li>8.	<strong>Cities:</strong>
-        The page shows all the cities in the database, their information, and provide CRUD operations. The cities are assigned to the restaurants.</li>
-    <li>9.	<strong>Employees:</strong>
-        The page shows all the employees in the database, their information, and provide CRUD operations.</li>
-    <li>10.	<strong>Roles:</strong> 
-        The page shows all the roles in the database, their information, and provide CRUD operations. The roles are assigned to the employees.</li>
+    6.	<strong>Restaurants:</strong>
+        The page shows all the restaurants in the database, their information, and provide CRUD operations. The following image represents this page.<br>
+    7.	<strong>Areas:</strong>
+        The page shows all the areas in the database, their information, and provide CRUD operations. The areas are assigned to the restaurants.<br>
+    8.	<strong>Cities:</strong>
+        The page shows all the cities in the database, their information, and provide CRUD operations. The cities are assigned to the restaurants.<br>
+    9.	<strong>Employees:</strong>
+        The page shows all the employees in the database, their information, and provide CRUD operations.<br>
+    10.	<strong>Roles:</strong> 
+        The page shows all the roles in the database, their information, and provide CRUD operations. The roles are assigned to the employees.<br>
 </ul>
 <img src="https://github.com/anapaularpontes/DeliveryDispatch/blob/master/imgs/Capture06.PNG?raw=true" />
 <br/><br/>
